@@ -17,7 +17,9 @@
     * provide username and email address (mail/verbal to admin)
     * admin to add user, set initial password and optionally send access key info to new user
     * by default developers will be put in CodestarDeveloper group
-* IAM login link: https://182176061631.signin.aws.amazon.com/console
+* IAM login link:
+    * https://codestarnl.signin.aws.amazon.com/console
+    * https://182176061631.signin.aws.amazon.com/console
     * Users are advised to activate Multifactor Authentication
     * Userd can create their own access key via 'My Security credentials'
 * Install AWS CLI - TBD (see internet)

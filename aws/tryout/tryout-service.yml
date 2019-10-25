@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: tryout-service
 spec:
+  type: LoadBalancer
   selector:
     app: tryout
   ports:

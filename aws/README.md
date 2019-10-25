@@ -38,6 +38,7 @@
     
 ## AWS Kubernetes cluster
 
+* Resources: AWS documentation, and https://kubernetes-training.readthedocs.io/en/latest/index.html
 * EKS -> Create cluster
     * Create Role to allow EKS to create/configure resources -> https://console.aws.amazon.com/iam/home?#/roles
         * created role `EKS_Manager`

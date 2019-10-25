@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tryout-deployment
+  labels:
+    app: tryout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tryout
+  template:
+    metadata:
+      labels:
+        app: tryout
+    spec:
+      containers:
+        - name: tryout
+          image: nginx:1.7.9
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              readOnly: true
+              name: resources
+      volumes:
+        - name: resources

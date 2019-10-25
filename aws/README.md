@@ -45,25 +45,21 @@
         * install `eksctl` (see https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html#installing-eksctl)
         * https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html
         * See `eksctl create cluster` command given below
+            ```
+            eksctl create cluster \
+            --name interchange-cluster \
+            --version 1.14 \
+            --nodegroup-name interchange-workers \
+            --node-type t2.micro \
+            --nodes 2 \
+            --nodes-min 2 \
+            --nodes-max 3 \
+            --node-ami auto
+            ```
     * Configure Kubernetes CLI
         * aws eks --region eu-west-1 update-kubeconfig --name interchange-cluster
-```
-eksctl create cluster \
---name interchange-cluster \
---version 1.14 \
---nodegroup-name interchange-workers \
---node-type t2.micro \
---nodes 2 \
---nodes-min 2 \
---nodes-max 3 \
---node-ami auto
-```
-
-        
-    * Get a DNS name to access the services on the cluster
-        * not needed, the EKS cluster has a public endpoint (visible on the EKS Console page)
-        
-    * Create service, deployment, and ingress
+    * Create the deployment/service/ingress
+        * See /aws/tryout for examples
     
 ### Troubleshooting
 

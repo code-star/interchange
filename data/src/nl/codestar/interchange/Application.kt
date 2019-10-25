@@ -14,10 +14,11 @@ import io.ktor.locations.*
 import org.slf4j.event.*
 import io.ktor.websocket.*
 import io.ktor.http.cio.websocket.*
+import kotlinx.serialization.Serializable
 import java.time.*
 
-import kotlinx.serialization.*
 import kotlinx.serialization.json.*
+import nl.codestar.interchange.here.HereRoutingAPIResponse
 
 
 data class City(val name: String, val lattitude: String, val longitude: String)
@@ -42,7 +43,7 @@ suspend fun main(args: Array<String>) {
                 "&app_code=$appCode" +
                 "&waypoint0=geo!52.065465,5.0676533&waypoint1=geo!52.072752,4.902093&mode=shortest;car;traffic:disabled&alternatives=4&instructionFormat=text&representation=turnByTurn&jsonAttributes=25")
 
-        val hereJson = json.parse(HereRoutingApiResponse.serializer(), hereBytes)
+        val hereJson = json.parse(HereRoutingAPIResponse.serializer(), hereBytes)
 
         println(hereJson)
     }

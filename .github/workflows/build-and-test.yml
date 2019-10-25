@@ -1,0 +1,21 @@
+name: build-and-test
+
+on: [push]
+
+jobs:
+  backend:
+    name: "backend / Build and test"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run Gradle
+      run: cd backend && ./gradlew clean test
+
+  data:
+    name: "data / Build and test"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run Gradle
+      run: cd data && ./gradlew clean test
+

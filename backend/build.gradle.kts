@@ -61,10 +61,6 @@ kotlin.sourceSets["test"].kotlin.srcDirs("test")
 sourceSets["main"].resources.srcDirs("resources")
 sourceSets["test"].resources.srcDirs("testresources")
 
-tasks {
-    "shadowJar"(ShadowJar::class) {
-        archiveBaseName.set(project.name)
-//        archiveClassifier.set(null)
-//        archiveVersion.set(null)
-    }
+tasks.withType<ShadowJar>  {
+    archiveBaseName.set("${project.name}-all")
 }

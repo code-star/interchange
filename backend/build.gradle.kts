@@ -47,7 +47,7 @@ tasks {
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     compile("ch.qos.logback:logback-classic:$logback_version")
-    compile("io.ktor:ktor-server-netty:$ktor_version")
+    compile("io.ktor:ktor-server-netty:$ktor_version") { exclude("io.netty", "netty-codec-http2")}
     compile("io.ktor:ktor-server-core:$ktor_version")
     compile("io.ktor:ktor-auth:$ktor_version")
     compile("io.ktor:ktor-gson:$ktor_version")

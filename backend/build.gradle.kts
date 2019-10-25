@@ -1,8 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 val logback_version: String by project
 val ktor_version: String by project
 val kotlin_version: String by project
+
+
+buildscript {
+    dependencies {
+        classpath("com.github.jengelman.gradle.plugins:shadow:5.1.0")
+    }
+}
+
+apply(plugin = "com.github.johnrengelman.shadow")
 
 plugins {
     application
@@ -21,6 +31,7 @@ repositories {
     mavenLocal()
     jcenter()
     maven { url = uri("https://kotlin.bintray.com/ktor") }
+    maven { url = uri("https://plugins.gradle.org/m2/") }
 }
 
 tasks {
@@ -49,3 +60,7 @@ kotlin.sourceSets["test"].kotlin.srcDirs("test")
 
 sourceSets["main"].resources.srcDirs("resources")
 sourceSets["test"].resources.srcDirs("testresources")
+
+tasks.withType<ShadowJar>  {
+    archiveBaseName.set("${project.name}-all")
+}

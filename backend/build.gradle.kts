@@ -38,6 +38,10 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
     }
+
+    withType<Test> {
+        useJUnitPlatform()
+    }
 }
 
 dependencies {
@@ -52,11 +56,15 @@ dependencies {
     compile("io.ktor:ktor-server-host-common:$ktor_version")
     compile("io.ktor:ktor-websockets:$ktor_version")
     compile("org.jetbrains.exposed:exposed:0.17.4")
+    implementation("software.amazon.kinesis:amazon-kinesis-client:2.2.5"){ exclude("com.amazonaws", "aws-java-sdk-kinesisvideo") }
+    compile("io.netty:netty-codec-http2:4.1.35.Final")
     testCompile("io.ktor:ktor-server-tests:$ktor_version")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.0")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
 kotlin.sourceSets["test"].kotlin.srcDirs("test")
+
 
 sourceSets["main"].resources.srcDirs("resources")
 sourceSets["test"].resources.srcDirs("testresources")

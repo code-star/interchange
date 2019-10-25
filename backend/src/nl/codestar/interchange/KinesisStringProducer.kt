@@ -23,6 +23,7 @@ class KinesisStringProducer {
   private val partitionKey = "1"
   private val region = Region.of("eu-west-1")
   private val credentials = AwsBasicCredentials.create("test-id", "test-key")
+
   val nettyClient: SdkAsyncHttpClient =
     NettyNioAsyncHttpClient
       .builder()
@@ -73,6 +74,8 @@ class KinesisStringProducer {
 
 
   fun run() {
+    System.setProperty("aws.cborEnabled", "false")
+
     createStream()
     createRecord()
   }

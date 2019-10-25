@@ -59,14 +59,21 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
+        route("api/v0") {
+            /**
+             * Get the best route from a coordinate to another coordinate
+             */
+            get("route") {
+                val params = call.request.queryParameters
+                val fromLat: String? = params["fromLat"]
+                val toLat: String? = params["toLat"]
 
-        get("/json/gson") {
-            call.respond(mapOf("hello" to "world"))
-        }
+                val fromLon: String? = params["fromLon"]
+                val toLon: String? = params["toLon"]
 
+                call.respondText("Routy McRouteface from (${fromLon ?: "unknown"}, $fromLat) to ($toLon, $toLat)")
+            }
+        }
 
         install(StatusPages) {
             exception<AuthenticationException> { cause ->

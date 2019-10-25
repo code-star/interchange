@@ -49,7 +49,7 @@ dependencies {
 
     compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     compile("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")
-
+    implementation("io.ktor:ktor-client-apache:$ktor_version")
     testCompile("io.ktor:ktor-server-tests:$ktor_version")
 }
 

@@ -1,30 +1,16 @@
 package nl.codestar.interchange
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.auth.*
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
-import io.ktor.gson.*
-import io.ktor.features.*
-import io.ktor.locations.*
-import org.slf4j.event.*
-import io.ktor.websocket.*
-import io.ktor.http.cio.websocket.*
-import kotlinx.serialization.Serializable
-import java.time.*
-
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import nl.codestar.interchange.here.HereRoutingAPIResponse
 
 
 data class City(val name: String, val lattitude: String, val longitude: String)
 data class Edge(val start: City, val end: City)
 
-suspend fun main(args: Array<String>) {
+suspend fun main() {
     val appId = "knlxkDhhXNJfoE26rgIP"
     val appCode = "j2VGkmwQ63x-BzKP_LOvyA"
 

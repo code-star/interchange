@@ -26,3 +26,5 @@ hs_err_pid*
 # IntelliJ
 .idea
 
+# Mac
+.DS_Store

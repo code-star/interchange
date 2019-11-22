@@ -1,0 +1,15 @@
+.Logo {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    font-family: 'Baloo', cursive;
+    color: white;
+    font-size: 80px;
+    text-align: right;
+    line-height: 55px;
+}
+
+.Small {
+    font-size: 16px;
+    color: #f08300;
+}

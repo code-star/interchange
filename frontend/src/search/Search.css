@@ -1,7 +1,7 @@
 .Search {
     position: fixed;
     top: 30px;
-    left: 30px;
+    right: 30px;
     width: 300px;
     background-color: white;
     border-radius: 5px;

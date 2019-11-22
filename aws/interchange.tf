@@ -7,6 +7,9 @@ locals {
   cluster_name = "interchange-cluster"
 }
 
+output "cluster_ip" {
+  value = module.eks.cluster_endpoint
+}
 
 module "eks" {
   config_output_path = "./target/"

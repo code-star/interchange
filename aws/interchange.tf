@@ -63,6 +63,8 @@ module "vpc" {
 }
 
 resource "aws_kinesis_stream" "interchange_stream" {
+  enforce_consumer_deletion = true
+  
   name             = "Roads"
   shard_count      = 1
   retention_period = 24

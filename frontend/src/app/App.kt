@@ -11,12 +11,11 @@ class App : RComponent<RProps, RState>() {
         div {
             search()
             logo()
-           
         }
 
         ReactMapGL  {
-            attrs.width = 1000
-            attrs.height = 1000
+            attrs.width = "100vw"
+            attrs.height = "100vh"
             attrs.latitude = 52.132633
             attrs.longitude = 5.291266
             attrs.zoom = 7

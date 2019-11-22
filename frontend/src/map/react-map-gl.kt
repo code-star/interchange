@@ -6,8 +6,8 @@ import react.*
 external val ReactMapGL: RClass<ReactMapGLProps>
 
 external interface ReactMapGLProps : RProps {
-    var width: Number
-    var height: Number 
+    var width: String
+    var height: String 
     var latitude: Number 
     var longitude: Number 
     var zoom: Number

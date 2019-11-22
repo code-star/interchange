@@ -14,3 +14,4 @@
     * `kubectl describe service tryout-service | grep Ingress`
 * check to see if you see the Nginx default page on the reported url
 
+* You can run a GUI dashboard (see `../aws/README.md`)

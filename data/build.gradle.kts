@@ -51,6 +51,7 @@ dependencies {
     compile("io.ktor:ktor-server-host-common:$ktor_version")
     compile("io.ktor:ktor-websockets:$ktor_version")
     compile("org.jetbrains.exposed:exposed:0.17.4")
+    compile("io.github.config4k:config4k:0.4.1") // See the `Download` badge
 
     compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     compile("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")

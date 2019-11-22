@@ -6,7 +6,25 @@ import react.dom.*
 import search.search
 import ReactMapGL
 
-class App : RComponent<RProps, RState>() {
+interface ViewportState: RState {
+    var width: String
+    var height: String 
+    var latitude: Number 
+    var longitude: Number 
+    var zoom: Number
+}
+
+
+class App : RComponent<RProps, ViewportState>() {
+    init {
+        state.width = "100vw"
+        state.height = "100vh"
+        state.latitude = 52.132633
+        state.longitude = 5.291266
+        state.zoom = 7
+    }
+
+
     override fun RBuilder.render() {
         div {
             search()
@@ -14,13 +32,23 @@ class App : RComponent<RProps, RState>() {
         }
 
         ReactMapGL  {
-            attrs.width = "100vw"
-            attrs.height = "100vh"
-            attrs.latitude = 52.132633
-            attrs.longitude = 5.291266
-            attrs.zoom = 7
+            attrs.width = state.width
+            attrs.height = state.height
+            attrs.latitude = state.latitude
+            attrs.longitude = state.longitude
+            attrs.zoom = state.zoom
+            attrs.onViewportChange = { viewport ->
+                setState {
+                    width = viewport.width
+                    height = viewport.height
+                    latitude = viewport.latitude
+                    longitude = viewport.longitude
+                    zoom = viewport.zoom
+                }
+            }
         }
     }
+
 }
 
 fun RBuilder.app() = child(App::class) {}

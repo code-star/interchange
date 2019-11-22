@@ -2,12 +2,11 @@ package nl.codestar.interchange
 
 import io.netty.handler.timeout.TimeoutException
 import org.slf4j.LoggerFactory
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.http.Protocol
 import software.amazon.awssdk.http.SdkHttpConfigurationOption
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient
 import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient
-import software.amazon.awssdk.regions.Region
+import software.amazon.awssdk.regions.providers.DefaultAwsRegionProviderChain
 import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient
 import software.amazon.awssdk.services.kinesis.KinesisAsyncClient
@@ -20,20 +19,18 @@ import software.amazon.kinesis.processor.ShardRecordProcessorFactory
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.net.URI
+import java.nio.charset.StandardCharsets
 import java.util.*
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
-
 
 class KinesisStringConsumer {
 
   private val log = LoggerFactory.getLogger(KinesisStringConsumer::class.java!!)
 
-  private val streamName = "string"
+  private val streamName = "Roads"
   private val consumerName = "string-consumer-1"
-  private val credentials = AwsBasicCredentials.create("test-id", "test-key")
-  private val region = Region.of("eu-west-1")
+  private val region = DefaultAwsRegionProviderChain().region
 
   val nettyClient: SdkAsyncHttpClient =
     NettyNioAsyncHttpClient
@@ -48,12 +45,10 @@ class KinesisStringConsumer {
           )
           .build()
       )
-    
+
   private val builder = KinesisAsyncClient
     .builder()
     .region(this.region)
-    .endpointOverride(URI.create("http://localhost:4567"))
-    .credentialsProvider { credentials }
     .httpClient(nettyClient)
 
   private val kinesisClient = builder.build()
@@ -111,7 +106,7 @@ class KinesisStringConsumer {
 
 class RecordProcessorFactory : ShardRecordProcessorFactory {
   override fun shardRecordProcessor(): ShardRecordProcessor {
-      return RecordProcessor();
+    return RecordProcessor();
   }
 }
 
@@ -130,7 +125,12 @@ class RecordProcessor : ShardRecordProcessor {
   override fun processRecords(processRecordsInput: ProcessRecordsInput) {
 
     log.info("Processing ${processRecordsInput.records().size} record(s)");
-    processRecordsInput.records().forEach { r -> log.info("Processing record pk: ${r.partitionKey()} -- Seq: ${r.sequenceNumber()}")  }
+    processRecordsInput
+      .records()
+      .forEach { r ->
+        val content = StandardCharsets.UTF_8.decode(r.data()).toString()
+        log.info("Processing record pk: ${r.partitionKey()} -- Content ${content} -- Seq: ${r.sequenceNumber()}")
+      }
   }
 
   override fun leaseLost(leaseLostInput: LeaseLostInput?) {

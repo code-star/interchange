@@ -16,6 +16,8 @@ aws kinesis list-streams
 
 You should see the stream "Roads" listed there.
 
+When you run the application, the Kinesis connection library will pick up these settings from your configuration file (`~/.aws/credentials`) and connect using that.
+
 ## Configuring Kinesis to run locally
 
 To run the application locally, we need to be able to connect to a Kinesis server (which also runs locally). To do this, we need to install LocalStack (https://github.com/localstack/localstack):

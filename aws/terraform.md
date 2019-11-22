@@ -18,6 +18,7 @@
     
 * The configuration is given in `./aws/interchange.tf`
 * To update the AWS infra, run `terraform apply` in the `./aws` folder
+<<<<<<< Updated upstream
 * To tear down the AWS infra, run `terraform destroy` in the `.aws` folder
 
 ## Accessing the kubernetes dashboard
@@ -34,3 +35,6 @@ Based on https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl
 * Browse to the dashboard
     `http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=default`
   
+=======
+* To tear down the AWS infra, run `terraform destroy` in the `./aws` folder
+>>>>>>> Stashed changes

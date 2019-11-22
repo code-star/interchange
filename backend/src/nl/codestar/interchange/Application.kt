@@ -2,22 +2,26 @@ package nl.codestar.interchange
 
 import io.ktor.application.*
 import io.ktor.response.*
-import io.ktor.request.*
 import io.ktor.routing.*
 import io.ktor.http.*
-import io.ktor.auth.*
 import io.ktor.gson.*
 import io.ktor.features.*
-import io.ktor.locations.*
 import org.slf4j.event.*
-import io.ktor.websocket.*
-import io.ktor.http.cio.websocket.*
-import java.time.*
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>) {
+
+
+    val producer = KinesisStringProducer()
+
+    producer.run()
+
+    val consumer = KinesisStringConsumer()
+
+    consumer.run()
+}
 
 @Suppress("unused") // Referenced in application.conf
-@kotlin.jvm.JvmOverloads
+@JvmOverloads
 fun Application.module(testing: Boolean = false) {
 
     install(ContentNegotiation) {

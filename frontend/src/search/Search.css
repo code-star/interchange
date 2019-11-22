@@ -1,0 +1,55 @@
+.Search {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 300px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.2);
+    padding: 10px;
+}
+
+.From, .To {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.From label, .To label {
+    margin-bottom: 5px;
+    font-family: 'Baloo', cursive;
+}
+
+.From input[type=text], .To input[type=text] {
+    display: block;
+    width: 100%;
+    border: 1px solid #3988ce;
+    border-radius: 5px;
+    line-height: 30px;
+    padding: 0 5px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.Submit {
+    padding-top: 5px;
+}
+
+.Submit button {
+    display: block;
+    width: 100%;
+    border: none;
+    line-height: 30px;
+    text-align: center;
+    outline: none;
+    background-color: #3988ce;
+    color: white;
+    border-radius: 5px;
+    font-family: 'Baloo', cursive;
+    font-size: 16px;
+}
+
+.Submit button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}

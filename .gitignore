@@ -34,3 +34,5 @@ hs_err_pid*
 
 # build folders
 target
+# Mac
+.DS_Store

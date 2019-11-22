@@ -17,9 +17,9 @@ class App : RComponent<RProps, RState>() {
         ReactMapGL  {
             attrs.width = 1000
             attrs.height = 1000
-            attrs.latitude = 37.7577
-            attrs.longitude = -122.4376
-            attrs.zoom = 8
+            attrs.latitude = 52.132633
+            attrs.longitude = 5.291266
+            attrs.zoom = 7
         }
     }
 }

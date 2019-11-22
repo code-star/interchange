@@ -48,6 +48,7 @@ class KinesisStringProducer {
   private val client = builder.build()
 
   private fun createStream() {
+    println("Creating a stream")
     val request = CreateStreamRequest
       .builder()
       .streamName(streamName)
@@ -60,6 +61,7 @@ class KinesisStringProducer {
   }
 
   private fun createRecord() {
+    println("Creating a record")
     val request = PutRecordRequest
       .builder()
       .streamName(streamName)
@@ -67,16 +69,17 @@ class KinesisStringProducer {
       .data(SdkBytes.fromString("Hello world!", Charset.defaultCharset()))
       .build()
 
-    val response = client.putRecord(request).get(10, TimeUnit.SECONDS)
+//    val response = client.putRecord(request).get(10, TimeUnit.SECONDS)
+      println("Done create record")
 
-    println(response)
+//    println(response)
   }
 
 
   fun run() {
     System.setProperty("aws.cborEnabled", "false")
 
-    createStream()
+//    createStream()
     createRecord()
   }
 

@@ -21,6 +21,8 @@ module "eks" {
     }
   ]
 
+  map_users                            = var.map_users
+
   tags = {
     environment = "test"
   }

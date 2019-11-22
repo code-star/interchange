@@ -23,7 +23,7 @@
     * https://codestarnl.signin.aws.amazon.com/console
     * https://182176061631.signin.aws.amazon.com/console
     * Users are advised to activate Multifactor Authentication
-    * Userd can create their own access key via 'My Security credentials'
+    * Users can create their own access key via 'My Security credentials'
 * Install AWS CLI - TBD (see internet)
 * Configure CLI `aws configure`
     * Enter Access Key `***`
@@ -60,7 +60,7 @@
     * Configure Kubernetes CLI
         * aws eks --region eu-west-1 update-kubeconfig --name interchange-cluster
     * Create the deployment/service/ingress
-        * See /aws/tryout for examples
+        * See /aws/tryout for examples, use `kubectl apply -f <filename>`
     
 ### Troubleshooting
 

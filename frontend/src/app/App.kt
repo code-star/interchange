@@ -32,18 +32,20 @@ class App : RComponent<RProps, ViewportState>() {
         }
 
         ReactMapGL  {
-            attrs.width = state.width
-            attrs.height = state.height
-            attrs.latitude = state.latitude
-            attrs.longitude = state.longitude
-            attrs.zoom = state.zoom
-            attrs.onViewportChange = { viewport ->
-                setState {
-                    width = viewport.width
-                    height = viewport.height
-                    latitude = viewport.latitude
-                    longitude = viewport.longitude
-                    zoom = viewport.zoom
+            attrs {
+                width = state.width
+                height = state.height
+                latitude = state.latitude
+                longitude = state.longitude
+                zoom = state.zoom
+                onViewportChange = { viewport ->
+                    setState {
+                        width = viewport.width
+                        height = viewport.height
+                        latitude = viewport.latitude
+                        longitude = viewport.longitude
+                        zoom = viewport.zoom
+                    }
                 }
             }
         }

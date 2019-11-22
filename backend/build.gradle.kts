@@ -69,6 +69,6 @@ kotlin.sourceSets["test"].kotlin.srcDirs("test")
 sourceSets["main"].resources.srcDirs("resources")
 sourceSets["test"].resources.srcDirs("testresources")
 
-tasks.withType<ShadowJar>  {
-    archiveBaseName.set("${project.name}-all")
-}
+//tasks.withType<ShadowJar>  {
+//    archiveBaseName.set("${project.name}-all")
+//}

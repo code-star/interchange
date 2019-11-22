@@ -9,14 +9,7 @@ import io.ktor.features.*
 import org.slf4j.event.*
 
 fun main(args: Array<String>) {
-
-
-    val producer = KinesisStringProducer()
-
-    producer.run()
-
     val consumer = KinesisStringConsumer()
-
     consumer.run()
 }
 

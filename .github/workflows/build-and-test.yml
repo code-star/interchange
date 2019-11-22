@@ -11,6 +11,18 @@ jobs:
     - name: Run Gradle
       run: cd backend && ./gradlew clean test
 
+  frontend:
+    name: "frontend / Build and test"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Run Yarn
+      run: cd frontend && yarn && yarn build && yarn test
+
   data:
     name: "data / Build and test"
     runs-on: ubuntu-latest

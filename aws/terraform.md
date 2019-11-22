@@ -13,3 +13,7 @@
 * in the `./aws` folder run
     * `terraform init`
     * This will install the aws plugin for terraform
+    
+* The configuration is given in `./aws/interchange.tf`
+* To update the AWS infra, run `terraform apply` in the `./aws` folder
+* To tear down the AWS infra, run `terraform destroy` in the `.aws` folder

@@ -15,3 +15,6 @@
 * check to see if you see the Nginx default page on the reported url
 
 * You can run a GUI dashboard (see `../aws/README.md`)
+
+## Setup Registry
+* Follow AWS instructions/steps (see https://eu-central-1.console.aws.amazon.com/ecr/repositories?region=eu-central-1)

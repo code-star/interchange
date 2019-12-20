@@ -36,12 +36,29 @@ jobs:
           wrapper-directory: backend
           arguments: build
 
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Push backend Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: codestar-interchange-backend
           IMAGE_TAG: ${{ github.sha }}
         run: |
           cd backend
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Build data
+        uses: eskatos/gradle-command-action@v1
+        with:
+          build-root-directory: data
+          wrapper-directory: data
+          arguments: build
+  
+      - name: Push data Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: codestar-interchange-data
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd backend
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest

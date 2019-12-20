@@ -20,8 +20,8 @@ interface SearchState: RState {
 
 class Search(props: SearchProps): RComponent<SearchProps, SearchState>(props) {
     init {
-        state.from = ""
-        state.to = ""
+        state.from = "Codestar"
+        state.to = "Codestarwars"
     }
 
     override fun RBuilder.render() {

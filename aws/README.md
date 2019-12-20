@@ -70,13 +70,15 @@ Based on https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl
 
 * Ensure your AWS userID is present in the auth_config(?) config map
 * Ensure Kubernetes CLI is configured to work with the EKS cluster (see above)
-* Get an access token for the dashboard
-    `kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')`
-* Copy the access token
-* Launch the proxy:
-    `kubectl proxy`
-* Browse to the dashboard
-    `http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=default`
+* See `aws/kubernetes/dashboard/README.md`
+    * Prepare the dashboard by applying the yamls in `./aws/kubernetes/dashboard/`
+    * Get an access token for the dashboard
+        `kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')`
+    * Copy the access token
+    * Launch the proxy:
+        `kubectl proxy`
+    * Browse to the dashboard
+        `http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=default`
     
 ### Troubleshooting
 

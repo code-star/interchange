@@ -21,7 +21,6 @@ import nl.codestar.interchange.here.HereRoutingAPIResponse
 
 
 fun CoroutineScope.produceNumbers() = produce<List<HereRoute>> {
-    var x = 1 // start from 1
     while (true) {
 
 

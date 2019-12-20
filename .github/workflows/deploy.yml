@@ -44,25 +44,28 @@ jobs:
         run: |
           cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
 
-      - name: Build data
-        uses: eskatos/gradle-command-action@v1
-        with:
-          build-root-directory: data
-          wrapper-directory: data
-          arguments: build
+      # - name: Build data
+      #   uses: eskatos/gradle-command-action@v1
+      #   with:
+      #     build-root-directory: data
+      #     wrapper-directory: data
+      #     arguments: build
   
-      - name: Push data Docker image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: codestar-interchange-data
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cd backend
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+      # - name: Push data Docker image
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: codestar-interchange-data
+      #     IMAGE_TAG: ${{ github.sha }}
+      #   run: |
+      #     cd backend
+      #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
 
+      # K8S_SECRET is the YAML of the secret for a K8s service account
+      # See https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+      # See https://github.com/Azure/k8s-set-context#service-account-approach
       - uses: azure/k8s-set-context@v1
         with:
           method: service-account

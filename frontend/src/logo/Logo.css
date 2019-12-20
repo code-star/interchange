@@ -1,5 +1,6 @@
 .Logo {
     position: fixed;
+    z-index: 1;
     right: 30px;
     bottom: 30px;
     font-family: 'Baloo', cursive;

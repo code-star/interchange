@@ -4,10 +4,11 @@
   "private": true,
   "dependencies": {
     "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "react-dom": "^16.11.0",
+    "react-map-gl": "^5.1.2"
   },
   "devDependencies": {
-    "react-scripts-kotlin": "4.0.1"
+    "react-scripts-kotlin": "^4.0.2"
   },
   "scripts": {
     "start": "react-scripts-kotlin start",

@@ -1,5 +1,6 @@
 .Search {
     position: fixed;
+    z-index: 1;
     top: 30px;
     left: 30px;
     width: 300px;

@@ -43,37 +43,37 @@ interface LoggerLike {
 
   fun info(message: String) {
     if (isInfoEnabled()) {
-      logger.debug(message)
+      logger.info(message)
     }
   }
 
   fun info(message: String, error: Throwable) {
     if (isInfoEnabled()) {
-      logger.debug(message, error)
+      logger.info(message, error)
     }
   }
 
   fun warn(message: String) {
     if (isWarnEnabled()) {
-      logger.debug(message)
+      logger.warn(message)
     }
   }
 
   fun warn(message: String, error: Throwable) {
     if (isWarnEnabled()) {
-      logger.debug(message, error)
+      logger.warn(message, error)
     }
   }
 
   fun error(message: String) {
     if (isErrorEnabled()) {
-      logger.debug(message)
+      logger.error(message)
     }
   }
 
   fun error(message: String, error: Throwable) {
     if (isErrorEnabled()) {
-      logger.debug(message, error)
+      logger.error(message, error)
     }
   }
 }

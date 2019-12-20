@@ -20,16 +20,16 @@ import nl.codestar.interchange.here.HereRoutingAPIResponse
 
 
 
-fun CoroutineScope.produceNumbers() = produce<Int> {
+fun CoroutineScope.produceNumbers() = produce<List<HereRoute>> {
     var x = 1 // start from 1
     while (true) {
 
 
         for (edge in smallGraph().edges) {
-            println(HereService.getRoutes(edge.a.position, edge.b.position).toString().substring(0, 20))
+            val routes = HereService.getRoutes(edge.a.position, edge.b.position)
+            if(routes != null) send(routes)
         }
 
-        send(3)
         delay(3000) // wait 0.1s
     }
 }
@@ -66,7 +66,7 @@ suspend fun main() = runBlocking<Unit>{
     val producer = produceNumbers()
 
     for( msg in producer) {
-        println(msg)
+        println(msg.toString().substring(0, 100))
     }
 
 
@@ -97,7 +97,8 @@ object HereService {
             )
 
             json.parse(HereRoutingAPIResponse.serializer(), hereBytes).response.routes
-        } catch (_: Exception) {
+        } catch (ex: Exception) {
+            println(ex)
             null
         }
 

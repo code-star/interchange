@@ -49,7 +49,7 @@ data class HereLink(
     val linkId: String,
     val remainDistance: Int,
     val remainTime: Int,
-    val speedLimit: Double,
+    val speedLimit: Double = 0.0,
     val dynamicSpeedInfo: HereTrafficInformation,
     val roadName: String,
     val roadNumber: String,

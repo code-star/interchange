@@ -7,7 +7,7 @@ name: deploy
 on:
   push:
     branches:
-      - master
+      - deploy-kubernetes
 
 jobs:
   deploy:
@@ -62,3 +62,14 @@ jobs:
           cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - uses: Azure/k8s-deploy@v1
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        with:
+          namespace: 'default'
+          manifests: |
+              aws/kubernetes/backend-deployment.yaml
+              aws/kubernetes/backend-service.yaml
+          images: '$ECR_REGISTRY/$ECR_REPOSITORY:latest'          
+          kubectl-version: 'latest'

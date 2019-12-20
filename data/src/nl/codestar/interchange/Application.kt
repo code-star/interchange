@@ -11,19 +11,18 @@ import kotlinx.coroutines.runBlocking
 import nl.codestar.interchange.here.HereRoute
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.list
 import nl.codestar.interchange.domain.Edge
 import nl.codestar.interchange.domain.Graph
 import nl.codestar.interchange.domain.Node
 import nl.codestar.interchange.domain.Position
-
 import nl.codestar.interchange.here.HereRoutingAPIResponse
+import nl.codestar.interchange.producers.KinesisStringProducer
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
+import software.amazon.awssdk.regions.Region
 
-
-
-fun CoroutineScope.produceNumbers() = produce<List<HereRoute>> {
+fun CoroutineScope.numberGenerator() = produce<List<HereRoute>> {
     while (true) {
-
-
         for (edge in smallGraph().edges) {
             val routes = HereService.getRoutes(edge.a.position, edge.b.position)
             if(routes != null) send(routes)
@@ -59,28 +58,35 @@ val smallGraph = {
     )
 }
 
-suspend fun main() = runBlocking<Unit>{
+suspend fun main() = runBlocking {
+    val json = Json(JsonConfiguration.Stable.copy(strictMode = false))
 
-
-    val producer = produceNumbers()
-
-    for( msg in producer) {
-        println(msg.toString().substring(0, 100))
-    }
-
-
-
-
-
-
-}
-
-
-object HereService {
     val config = ConfigFactory.load()
 
-    val appId = config.extract<String>("here.appId")
-    val appCode = config.extract<String>("here.appCode")
+    val kinesisConfig = config.getConfig("kinesis")
+    val streamName = kinesisConfig.getString("streamName")
+    val region = kinesisConfig.getString("region")
+    val accessKeyId = kinesisConfig.getString("accessKeyId")
+    val secretAccessKey = kinesisConfig.getString("secretAccessKey")
+
+    val credentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey)
+
+    val producer = KinesisStringProducer(streamName, "1", Region.of(region), credentials)
+
+    val numberGenerator = numberGenerator()
+
+
+    for( msg in numberGenerator) {
+        producer.publish(json.stringify(HereRoute.serializer().list, msg))
+        println(msg.toString().substring(0, 100))
+    }
+}
+
+object HereService {
+    private val config = ConfigFactory.load()
+
+    private val appId = config.extract<String>("here.appId")
+    private val appCode = config.extract<String>("here.appCode")
 
     private val client = HttpClient()
     private val json = Json(JsonConfiguration.Stable.copy(strictMode = false))
@@ -100,5 +106,4 @@ object HereService {
             println(ex)
             null
         }
-
 }

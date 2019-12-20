@@ -4,7 +4,7 @@ metadata:
   name: backend
 spec:
   rules:
-    - host: 1259a9a67276c0ec9065e30ec7f5bc19.yl4.eu-west-1.eks.amazonaws.com
+    - host:  d1eb04041de9d8998c68e6985e17f6c8.sk1.eu-central-1.eks.amazonaws.com
       http:
         paths:
           - backend:

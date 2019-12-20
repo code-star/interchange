@@ -1,1 +1,1 @@
-rootProject.name = "interchange"
+rootProject.name = "interchange-backend"

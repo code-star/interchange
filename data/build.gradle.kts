@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 val logback_version: String by project
 val ktor_version: String by project
 val kotlin_version: String by project
@@ -20,18 +22,21 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50")
         classpath("org.jetbrains.kotlin:kotlin-serialization:1.3.50")
+        classpath("com.github.jengelman.gradle.plugins:shadow:5.1.0")
     }
 }
 
 apply {
     plugin("kotlin")
     plugin("kotlinx-serialization")
+    plugin("com.github.johnrengelman.shadow")
 }
 
 repositories {
     mavenLocal()
     jcenter()
     maven { url = uri("https://kotlin.bintray.com/ktor") }
+    maven { url = uri("https://plugins.gradle.org/m2/") }
 }
 
 dependencies {

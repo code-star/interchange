@@ -1,5 +1,9 @@
 name: deploy
 
+# See https://github.com/marketplace/actions/deploy-to-kubernetes-cluster
+# See https://github.com/aws-actions/amazon-ecr-login
+# See https://github.com/marketplace/actions/gradle-command
+
 on:
   push:
     branches:
@@ -9,10 +13,52 @@ jobs:
   deploy:
     name: "Deploy"
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Build containers
-      run: echo "Building containers... [PLACEHOLDER]"
-    - name: Deploy to Amazon
-      run: echo "Deploying to Amazon... [PLACEHOLDER]"
+    steps:      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build backend
+        uses: eskatos/gradle-command-action@v1
+        with:
+          build-root-directory: backend
+          wrapper-directory: backend
+          arguments: build
+
+      - name: Push backend Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: codestar-interchange-backend
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd backend
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Build data
+        uses: eskatos/gradle-command-action@v1
+        with:
+          build-root-directory: data
+          wrapper-directory: data
+          arguments: build
+  
+      - name: Push data Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: codestar-interchange-data
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd backend
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest

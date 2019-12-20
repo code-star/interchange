@@ -15,3 +15,21 @@ Left over resources, manually deleted:
     * removing them also cleaned up the 2 active network interfaces
 * Elastic IP addresses - not attached to running instances - 2 entries
 
+
+## Day3 creation of infra
+* Ran the following commands in the ./aws folder:
+    ```shell script
+    terraform init
+    terraform refresh
+    terraform apply
+    
+    ```
+    Then wait for 10 minutes.
+* Errors out because terraform thinks it should use a desired number of 1 instance instead of 3.
+* `terraform destroy` to clean up the broken setup
+* remove `.terraform` folder and  and `terraform.tfstate` file (and its backup)
+* run `terraform init` anf `terraform refresh`
+* try `terraform plan` and `terraform apply` again
+* Failed with same error
+* change `desired_capacity` to `asg_desired_capacity`
+* `terraform apply`

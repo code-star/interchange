@@ -17,5 +17,6 @@
     * `terraform refresh`
     
 * The configuration is given in `interchange.tf`
+* Use `terraform plan` to see what terraform would to when `apply` is done
 * To update the AWS infra, run `terraform apply` in the `./aws` folder
 * To tear down the AWS infra, run `terraform destroy` in the `./aws` folder

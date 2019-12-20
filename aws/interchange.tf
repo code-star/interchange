@@ -23,7 +23,7 @@ module "eks" {
       instance_type = "t2.micro"
       asg_min_size = 3
       asg_max_size  = 3
-      desired_capacity = 3
+      asg_desired_capacity = 3
     }
   ]
 

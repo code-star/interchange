@@ -3,7 +3,7 @@ name: deploy
 on:
   push:
     branches:
-      - master
+      - dockerize-team-data
 
 jobs:
   deploy:
@@ -11,8 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Build containers
-      run: echo "Building containers... [PLACEHOLDER]"
-    - name: Deploy to Amazon
-      run: echo "Deploying to Amazon... [PLACEHOLDER]"
+    - uses: Azure/docker-login@v1
+      with:
+        login-server: 182176061631.dkr.ecr.eu-central-1.amazonaws.com
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: Build backend
+      run: |
+        cd backend
+        ../gradlew build
+        docker build -t codestar-interchange-backend .
+        docker push 182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange-data:latest
+    #- name: Deploy to Amazon
+    #  run: echo "Deploying to Amazon... [PLACEHOLDER]"
 

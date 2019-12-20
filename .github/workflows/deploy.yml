@@ -9,7 +9,7 @@ jobs:
   deploy:
     name: "Deploy"
     runs-on: ubuntu-latest
-    steps:
+    steps:      
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -21,6 +21,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - uses: actions/checkout@v1
       - name: Build backend
         run: |
           cd backend

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codestar-interchange-backend
+  labels:
+    app: codestar-interchange-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codestar-interchange-backend
+  template:
+    metadata:
+      labels:
+        app: codestar-interchange-backend
+    spec:
+      containers:
+        - name: codestar-interchange-backend
+          image: "182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange:latest" # Replaced by CircleCI script
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+              name: http

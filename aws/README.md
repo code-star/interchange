@@ -23,7 +23,7 @@
     * https://codestarnl.signin.aws.amazon.com/console
     * https://182176061631.signin.aws.amazon.com/console
     * Users are advised to activate Multifactor Authentication
-    * Userd can create their own access key via 'My Security credentials'
+    * Users can create their own access key via 'My Security credentials'
 * Install AWS CLI - TBD (see internet)
 * Configure CLI `aws configure`
     * Enter Access Key `***`
@@ -38,10 +38,12 @@
     
 ## AWS Kubernetes cluster
 
-* Resources: AWS documentation, and https://kubernetes-training.readthedocs.io/en/latest/index.html
-* EKS -> Create cluster
-    * Create Role to allow EKS to create/configure resources -> https://console.aws.amazon.com/iam/home?#/roles
-        * created role `EKS_Manager`
+* Resources: 
+    * AWS documentation, and https://kubernetes-training.readthedocs.io/en/latest/index.html
+    * Terraform documentation: https://www.terraform.io/
+
+* EKS
+    * Using Terraform to create cluster - see `interchange.tf` for details
     * Using the `eksctl` cli
         * install `eksctl` (see https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html#installing-eksctl)
         * https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html
@@ -58,9 +60,23 @@
             --node-ami auto
             ```
     * Configure Kubernetes CLI
-        * aws eks --region eu-west-1 update-kubeconfig --name interchange-cluster
+        * `aws eks --profile codestar --region eu-central-1 update-kubeconfig --name interchange-cluster`
+        * replace the profile with an appropriate profile if you don't want to use the `codestar` name
     * Create the deployment/service/ingress
-        * See /aws/tryout for examples
+        * See `./aws/tryout` for examples, use `kubectl apply -f <filename>`
+        
+### Accessing the kubernetes dashboard
+Based on https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html
+
+* Ensure your AWS userID is present in the auth_config(?) config map
+* Ensure Kubernetes CLI is configured to work with the EKS cluster (see above)
+* Get an access token for the dashboard
+    `kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep eks-admin | awk '{print $1}')`
+* Copy the access token
+* Launch the proxy:
+    `kubectl proxy`
+* Browse to the dashboard
+    `http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/overview?namespace=default`
     
 ### Troubleshooting
 

@@ -1,12 +1,12 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: nginx
+  name: backend
 spec:
   rules:
     - host: 1259a9a67276c0ec9065e30ec7f5bc19.yl4.eu-west-1.eks.amazonaws.com
       http:
         paths:
           - backend:
-              serviceName: tryout-service
-              servicePort: 80
+              serviceName: codestar-interchange-backend-service
+              servicePort: 8080

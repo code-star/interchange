@@ -26,5 +26,13 @@ hs_err_pid*
 # IntelliJ
 .idea
 
+# Terraform
+.terraform
+*.tfstate
+*.backup
+*.lock.*
+
+# build folders
+target
 # Mac
 .DS_Store

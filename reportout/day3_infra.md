@@ -32,4 +32,11 @@ Left over resources, manually deleted:
 * try `terraform plan` and `terraform apply` again
 * Failed with same error
 * change `desired_capacity` to `asg_desired_capacity`
-* `terraform apply`
+* `terraform apply` then succeeds (took between 12 and 20 minutes)
+
+### Testing creation and destruction
+* created a dummy.tf to create/destroy multiple times
+* first run without using kubectl to deploy anything on the k8s cluster
+    * creation took 12 minutes
+    * destruction took 15 minutes
+    * all AWS artifacts were cleaned up

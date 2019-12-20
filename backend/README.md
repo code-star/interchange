@@ -70,14 +70,14 @@ aws --endpoint-url=http://localhost:4567 kinesis list-streams
 Based on https://ktor.io/quickstart/quickstart/docker.html#building-and-running-the-docker-image and https://reladev.org/ktor-and-docker/
 
 ```
-docker build -t codestar-interchange .
+docker build -t codestar-interchange-backend .
 # To run the docker image locally
-docker run -m512M --cpus 2 -it -p 8089:8089 --rm codestar-interchange
+docker run -m512M --cpus 2 -it -p 8089:8089 --rm codestar-interchange-backend
 ```
 
 ## Pushing to K8s
 
 * Log in to the ECR docker registry `$(AWS_PROFILE="codestar" AWS_DEFAULT_REGION="eu-central-1" aws ecr get-login --no-include-email --region eu-central-1)`
-* Tag the image `docker tag codestar-interchange:latest 182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange:latest`
-* Push it to ECR: `docker push 182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange:latest`
+* Tag the image `docker tag codestar-interchange:latest 182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange-backend:latest`
+* Push it to ECR: `docker push 182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange-backend:latest`
 

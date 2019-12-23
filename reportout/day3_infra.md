@@ -40,3 +40,13 @@ Left over resources, manually deleted:
     * creation took 12 minutes
     * destruction took 15 minutes
     * all AWS artifacts were cleaned up
+* second run with using kubectl to deploy stuff
+    * creation took about 12 minutes
+    * destruction timed out after 20 minutes, again leaving the load balancers in place
+    * manually cleaned up the load balancers
+    * reran the terraform destroy
+    * errors out:
+        * Error: Error deleting VPC: DependencyViolation: The vpc 'vpc-0be94d9b97183a6af' has dependencies and cannot be deleted.
+    * remaining security groups for k8s were not cleaned up
+    * manually deleted vpc
+* manually deleted Vincent's Kinesis streams in Ohio

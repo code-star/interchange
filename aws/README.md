@@ -83,3 +83,19 @@ Based on https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl
 ### Troubleshooting
 
 `kubectl describe pods [podname]`
+
+### Setup service account
+* `kubectl apply -f kubernetes/initial/service-account.yml`
+* `kubectl get serviceaccounts/build-robot -o yaml`
+    * this shows the name of the generated secret (`...name: build-robot-token-XXX`)
+* lookup the token via
+    * `kubectl get secret build-robot-token-XXX -o yaml`
+* store the token as a secret for the github actions
+    * go to `https://github.com/code-star/interchange/settings/secrets`
+    * remove `K8S_SECRET` (old secret, if needed)
+    * create new `K8S_SECRET` secret, paste the complete yaml output of the previous step into the secret
+
+### Create backend services and ingress
+* `kubectl apply -f kubernetes/backend.yaml`
+* `kubectl apply -f kubernetes/backend-service.yml`
+* `kubectl apply -f kubernetes/backend-ingress.yml`

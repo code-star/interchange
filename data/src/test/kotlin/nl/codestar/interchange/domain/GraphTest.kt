@@ -1,28 +1,27 @@
 package nl.codestar.interchange.domain
 
-import kotlinx.serialization.dumps
+import io.kotlintest.specs.StringSpec
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlin.test.*
 
-class GraphTest {
+class GraphTest : StringSpec({
     val nodes = listOf(
-        Node(Position("50", "100")),
-        Node(Position("150", "200")),
-        Node(Position("250", "300"))
+            Node(Position("50", "1030")),
+            Node(Position("150", "200")),
+            Node(Position("250", "300"))
     )
 
     val edges = listOf(
-        Edge(nodes[0], nodes[1]),
-        Edge(nodes[0], nodes[2])
+            Edge(nodes[0], nodes[1]),
+            Edge(nodes[0], nodes[2])
     )
 
     val graph = Graph(nodes, edges)
 
     val json = Json(JsonConfiguration.Stable.copy(strictMode = false))
 
-    @Test
-    fun testSerialization() {
+    "serialization should work correctly" {
         val expected = """
             {
                 "nodes": [
@@ -40,8 +39,8 @@ class GraphTest {
         val serialized = json.toJson(Graph.serializer(), graph)
 
         assertEquals(
-            json.parseJson(expected),
-            serialized
+                json.parseJson(expected),
+                serialized
         )
     }
-}
+})

@@ -11,4 +11,11 @@ allprojects {
     maven { url = uri("https://kotlin.bintray.com/ktor") }
     maven { url = uri("https://plugins.gradle.org/m2/") }
   }
+
+  tasks.withType<Test> {
+    useJUnitPlatform()
+    testLogging {
+      events("passed", "failed", "skipped")
+    }
+  }
 }

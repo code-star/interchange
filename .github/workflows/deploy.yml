@@ -29,36 +29,49 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Build backend
-        uses: eskatos/gradle-command-action@v1
+      - uses: borales/actions-yarn@v2.0.0
+        working-directory: ./frontend
         with:
-          build-root-directory: backend
-          wrapper-directory: backend
-          arguments: build
-
-      - name: Push backend Docker image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: codestar-interchange-backend
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cd backend
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-
-      - name: Build data
-        uses: eskatos/gradle-command-action@v1
+          cmd: install
+      - uses: borales/actions-yarn@v2.0.0
+        working-directory: ./frontend
         with:
-          build-root-directory: data
-          wrapper-directory: data
-          arguments: build
+          cmd: build
+      - uses: borales/actions-yarn@v2.0.0
+        working-directory: ./frontend
+        with:
+          cmd: test
+
+      # - name: Build backend
+      #   uses: eskatos/gradle-command-action@v1
+      #   with:
+      #     build-root-directory: backend
+      #     wrapper-directory: backend
+      #     arguments: build
+
+      # - name: Push backend Docker image
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: codestar-interchange-backend
+      #     IMAGE_TAG: ${{ github.sha }}
+      #   run: |
+      #     cd backend
+      #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      # - name: Build data
+      #   uses: eskatos/gradle-command-action@v1
+      #   with:
+      #     build-root-directory: data
+      #     wrapper-directory: data
+      #     arguments: build
   
-      - name: Push data Docker image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: codestar-interchange-data
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cd backend
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+      # - name: Push data Docker image
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: codestar-interchange-data
+      #     IMAGE_TAG: ${{ github.sha }}
+      #   run: |
+      #     cd backend
+      #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest

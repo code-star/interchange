@@ -7,7 +7,7 @@ name: deploy
 on:
   push:
     branches:
-      - master
+      - deploy-kubernetes
 
 jobs:
   deploy:
@@ -44,7 +44,7 @@ jobs:
         run: |
           cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
 
       - name: Build data
         uses: eskatos/gradle-command-action@v1
@@ -61,4 +61,25 @@ jobs:
         run: |
           cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+
+      # K8S_SECRET is the YAML of the secret for a K8s service account
+      # See https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+      # See https://github.com/Azure/k8s-set-context#service-account-approach
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.K8S_URL }}
+          k8s-secret: ${{ secrets.K8S_SECRET }}
+        id: setcontext
+
+      - uses: Azure/k8s-deploy@v1
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        with:
+          namespace: 'default'
+          manifests: |
+              aws/kubernetes/backend-deployment.yaml
+              aws/kubernetes/backend-service.yaml
+          images: '$ECR_REGISTRY/$ECR_REPOSITORY:latest'          
+          kubectl-version: 'latest'

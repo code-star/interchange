@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: codestar-interchange-backend
-          image: "182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange-backend:latest" # Replaced by CircleCI script
+          image: "182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange-backend:latest"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081

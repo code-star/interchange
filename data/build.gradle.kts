@@ -7,8 +7,8 @@ val serialization_version: String by project
 
 plugins {
     application
-    kotlin("jvm") version "1.3.50"
-    kotlin("kapt") version "1.3.50"
+    kotlin("jvm")
+    kotlin("kapt")
 }
 
 group = "nl.codestar"
@@ -40,23 +40,22 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-    compile("ch.qos.logback:logback-classic:$logback_version")
-    compile("io.ktor:ktor-server-netty:$ktor_version")
-    compile("io.ktor:ktor-server-core:$ktor_version")
-    compile("io.ktor:ktor-auth:$ktor_version")
-    compile("io.ktor:ktor-gson:$ktor_version")
-    compile("io.ktor:ktor-locations:$ktor_version")
-    compile("io.ktor:ktor-metrics:$ktor_version")
-    compile("io.ktor:ktor-server-host-common:$ktor_version")
-    compile("io.ktor:ktor-websockets:$ktor_version")
-    compile("org.jetbrains.exposed:exposed:0.17.4")
-    compile("io.github.config4k:config4k:0.4.1") // See the `Download` badge
-
-    compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    compile("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-server-netty:$ktor_version")
+    implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation("io.ktor:ktor-auth:$ktor_version")
+    implementation("io.ktor:ktor-gson:$ktor_version")
+    implementation("io.ktor:ktor-locations:$ktor_version")
+    implementation("io.ktor:ktor-metrics:$ktor_version")
+    implementation("io.ktor:ktor-server-host-common:$ktor_version")
+    implementation("io.ktor:ktor-websockets:$ktor_version")
+    implementation("org.jetbrains.exposed:exposed:0.17.4")
+    implementation("io.github.config4k:config4k:0.4.1") // See the `Download` badge
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")
     implementation("io.ktor:ktor-client-apache:$ktor_version")
-    testCompile("io.ktor:ktor-server-tests:$ktor_version")
+    testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")

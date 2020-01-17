@@ -16,8 +16,8 @@ apply(plugin = "com.github.johnrengelman.shadow")
 
 plugins {
     application
-    kotlin("jvm") version "1.3.50"
-    kotlin("kapt") version "1.3.50"
+    kotlin("jvm")
+    kotlin("kapt")
 }
 
 group = "nl.codestar"
@@ -45,30 +45,25 @@ tasks {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-    compile("ch.qos.logback:logback-classic:$logback_version")
-    compile("io.ktor:ktor-server-netty:$ktor_version") { exclude("io.netty", "netty-codec-http2")}
-    compile("io.ktor:ktor-server-core:$ktor_version")
-    compile("io.ktor:ktor-auth:$ktor_version")
-    compile("io.ktor:ktor-gson:$ktor_version")
-    compile("io.ktor:ktor-locations:$ktor_version")
-    compile("io.ktor:ktor-metrics:$ktor_version")
-    compile("io.ktor:ktor-server-host-common:$ktor_version")
-    compile("io.ktor:ktor-websockets:$ktor_version")
-    compile("org.jetbrains.exposed:exposed:0.17.4")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-server-netty:$ktor_version") { exclude("io.netty", "netty-codec-http2")}
+    implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation("io.ktor:ktor-auth:$ktor_version")
+    implementation("io.ktor:ktor-gson:$ktor_version")
+    implementation("io.ktor:ktor-locations:$ktor_version")
+    implementation("io.ktor:ktor-metrics:$ktor_version")
+    implementation("io.ktor:ktor-server-host-common:$ktor_version")
+    implementation("io.ktor:ktor-websockets:$ktor_version")
+    implementation("org.jetbrains.exposed:exposed:0.17.4")
     implementation("software.amazon.kinesis:amazon-kinesis-client:2.2.5"){ exclude("com.amazonaws", "aws-java-sdk-kinesisvideo") }
-    compile("io.netty:netty-codec-http2:4.1.35.Final")
-    testCompile("io.ktor:ktor-server-tests:$ktor_version")
+    implementation("io.netty:netty-codec-http2:4.1.35.Final")
+    testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.0")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
 kotlin.sourceSets["test"].kotlin.srcDirs("test")
 
-
-sourceSets["main"].resources.srcDirs("resources")
-sourceSets["test"].resources.srcDirs("testresources")
-
-//tasks.withType<ShadowJar>  {
-//    archiveBaseName.set("${project.name}-all")
-//}
+project.the<SourceSetContainer>()["main"].resources.srcDirs("resources")
+project.the<SourceSetContainer>()["test"].resources.srcDirs("testresources")

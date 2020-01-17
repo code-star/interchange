@@ -7,7 +7,7 @@ import kotlin.test.*
 
 class GraphTest {
     val nodes = listOf(
-        Node(Position("50", "100")),
+        Node(Position("50", "1030")),
         Node(Position("150", "200")),
         Node(Position("250", "300"))
     )

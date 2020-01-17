@@ -29,5 +29,5 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run Gradle
-      run: cd data && ./gradlew data:clean test
+      run: ./gradlew data:clean data:test
 

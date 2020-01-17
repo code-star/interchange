@@ -7,14 +7,14 @@ import kotlin.test.*
 
 class GraphTest : StringSpec({
     val nodes = listOf(
-            Node(Position("50", "1030")),
-            Node(Position("150", "200")),
-            Node(Position("250", "300"))
+        Node(Position("50", "100")),
+        Node(Position("150", "200")),
+        Node(Position("250", "300"))
     )
 
     val edges = listOf(
-            Edge(nodes[0], nodes[1]),
-            Edge(nodes[0], nodes[2])
+        Edge(nodes[0], nodes[1]),
+        Edge(nodes[0], nodes[2])
     )
 
     val graph = Graph(nodes, edges)
@@ -39,8 +39,8 @@ class GraphTest : StringSpec({
         val serialized = json.toJson(Graph.serializer(), graph)
 
         assertEquals(
-                json.parseJson(expected),
-                serialized
+            json.parseJson(expected),
+            serialized
         )
     }
 })

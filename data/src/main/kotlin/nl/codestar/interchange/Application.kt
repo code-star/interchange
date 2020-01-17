@@ -18,8 +18,6 @@ import nl.codestar.interchange.domain.Position
 
 import nl.codestar.interchange.here.HereRoutingAPIResponse
 
-
-
 fun CoroutineScope.produceNumbers() = produce<List<HereRoute>> {
     while (true) {
 

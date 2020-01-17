@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="nl.codestar.interchange.domain.GraphTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-01-17T14:09:51" hostname="BA92-C02PV416G8WP" time="0.035">
+  <properties/>
+  <testcase name="serialization should work correctly" classname="nl.codestar.interchange.domain.GraphTest" time="0.035"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

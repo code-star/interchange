@@ -1,3 +1,10 @@
+
+locals {
+  profile_name = "default"
+  cluster_name = "interchange-cluster"
+  region_name = "eu-central-1"
+}
+
 variable "map_users" {
   description = "Additional IAM users to add to the aws-auth configmap."
   type = list(object({

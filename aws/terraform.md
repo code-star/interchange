@@ -10,13 +10,21 @@
 
 ## Configuration
 * set the correct region (`eu-central-1`)
-* in the `./aws` folder run
+    * in `./aws/interchange.tf` (pre Day 4 config)
+    * in `./aws/interchange-module/variables.tf` (Day 4 onwards)
+* in the `./aws/interchange-module` folder
+    * remove `.terraform` folder
+    * remove any `terraform.tfstate` and `...tfstate.backup` files
     * `terraform init`
-    * This will install the aws plugin for terraform
-* Refresh local state with actual resources:
+        * This will install the aws plugin for terraform
     * `terraform refresh`
+        * Make sure all needed files are present and local state is populated with actual resources
+    * `terraform plan`
+        * Prepare for creating/updating the infrastructure
+    * `terraform apply`
+        * perform updates
     
-* The configuration is given in `interchange.tf`
+* The configuration is given in `interchange-module/main.tf`
 * Use `terraform plan` to see what terraform would to when `apply` is done
-* To update the AWS infra, run `terraform apply` in the `./aws` folder
-* To tear down the AWS infra, run `terraform destroy` in the `./aws` folder
+* To update the AWS infra, run `terraform apply` in the `./aws/interchange-module` folder
+* To tear down the AWS infra, run `terraform destroy` in the `./aws/interchange-module` folder

@@ -56,10 +56,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")
     implementation("io.ktor:ktor-client-apache:$ktor_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
 }
-
-kotlin.sourceSets["main"].kotlin.srcDirs("src")
-kotlin.sourceSets["test"].kotlin.srcDirs("test")
-
-sourceSets["main"].resources.srcDirs("resources")
-sourceSets["test"].resources.srcDirs("testresources")

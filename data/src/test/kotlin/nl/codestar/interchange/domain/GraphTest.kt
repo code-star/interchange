@@ -1,11 +1,11 @@
 package nl.codestar.interchange.domain
 
-import kotlinx.serialization.dumps
+import io.kotlintest.specs.StringSpec
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlin.test.*
 
-class GraphTest {
+class GraphTest : StringSpec({
     val nodes = listOf(
         Node(Position("50", "100")),
         Node(Position("150", "200")),
@@ -21,8 +21,7 @@ class GraphTest {
 
     val json = Json(JsonConfiguration.Stable.copy(strictMode = false))
 
-    @Test
-    fun testSerialization() {
+    "serialization should work correctly" {
         val expected = """
             {
                 "nodes": [
@@ -44,4 +43,4 @@ class GraphTest {
             serialized
         )
     }
-}
+})

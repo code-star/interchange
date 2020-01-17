@@ -61,9 +61,3 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.0")
 }
-
-kotlin.sourceSets["main"].kotlin.srcDirs("src")
-kotlin.sourceSets["test"].kotlin.srcDirs("test")
-
-project.the<SourceSetContainer>()["main"].resources.srcDirs("resources")
-project.the<SourceSetContainer>()["test"].resources.srcDirs("testresources")

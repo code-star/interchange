@@ -81,3 +81,190 @@ resource "aws_kinesis_stream" "interchange_stream" {
     Environment = "test"
   }
 }
+
+resource "kubernetes_ingress" "interchange_ingress" {
+  metadata {
+    name = "interchange-ingress"
+  }
+
+  spec {
+    backend {
+      service_name = "codestar-interchange-frontend-service"
+      service_port = 8080
+    }
+    rule {
+      http {
+        path {
+          backend {
+            service_name = "codestar-interchange-backend-service"
+            service_port = 8080
+          }
+          path = "/api/*"
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service" "interchange_backend_service" {
+  metadata {
+    name = "codestar-interchange-backend-service"
+  }
+
+  spec {
+    selector = {
+      app = "codestar-interchange-backend"
+    }
+    port {
+      port = 8080
+      target_port = 8081
+      protocol = "TCP"
+    }
+  }
+}
+
+resource "kubernetes_service" "interchange_frontend_service" {
+  metadata {
+    name = "codestar-interchange-frontend-service"
+  }
+
+  spec {
+    selector = {
+      app = "codestar-interchange-frontend"
+    }
+    port {
+      port = 8080
+      target_port = 80
+      protocol = "TCP"
+    }
+    type = "LoadBalancer"
+  }
+}
+
+resource "kubernetes_deployment" "interchange_frontend_deployment" {
+  metadata {
+    name = "codestar-interchange-frontend-deployment"
+    labels = {
+      app = "codestar-interchange-frontend"
+    }
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "codestar-interchange-frontend"
+      }
+    }
+    template{
+      metadata {
+        labels = {
+          app = "codestar-interchange-frontend"
+        }
+      }
+      spec{
+        container {
+          name = "codestar-interchange-frontend"
+          image = "182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange-frontend:latest"
+          image_pull_policy = "IfNotPresent"
+          resources {
+            limits {
+              cpu = "0.5"
+              memory = "512Mi"
+            }
+            requests {
+              cpu = "250m"
+              memory = "50Mi"
+            }
+          }
+          port {
+            container_port = 80
+          }
+        }
+      }
+    }
+  }
+
+}
+
+resource "kubernetes_deployment" "interchange_backend_deployment" {
+  metadata {
+    name = "codestar-interchange-backend-deployment"
+    labels = {
+      app = "codestar-interchange-backend"
+    }
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "codestar-interchange-backend"
+      }
+    }
+    template{
+      metadata {
+        labels = {
+          app = "codestar-interchange-backend"
+        }
+      }
+      spec{
+        container {
+          name = "codestar-interchange-backend"
+          image = "182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange-backend:latest"
+          image_pull_policy = "IfNotPresent"
+          resources {
+            limits {
+              cpu = "0.5"
+              memory = "512Mi"
+            }
+            requests {
+              cpu = "250m"
+              memory = "50Mi"
+            }
+          }
+          port {
+            container_port = 8081
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+//apiVersion: v1
+//kind: Service
+//metadata:
+//name: my-service
+//spec:
+//selector:
+//app: MyApp
+//ports:
+//- protocol: TCP
+//port: 80
+//targetPort: 9376
+//clusterIP: 10.0.171.239
+//type: LoadBalancer
+//status:
+//loadBalancer:
+//ingress:
+//- ip: 192.0.2.127
+
+//
+//resource "kubernetes_service" "interchange_loadbalancer" {
+//  metadata {
+//    name = "codestar-interchange-loadbalancer"
+//  }
+//
+//  spec {
+//    selector = {
+//      app = "codestar-interchange-loadbalancer"
+//    }
+//    port {
+//      port = 80
+//      target_port = 8080
+//      protocol = "TCP"
+//    }
+//    cluster_ip = ""
+//  }
+//}

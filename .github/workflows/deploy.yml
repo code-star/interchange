@@ -8,9 +8,23 @@ on:
   push:
     branches:
       - master
+      - dockerize-frontend
+      - deploy-kubernetes
 
 jobs:
+  build_frontend:
+    name: "frontend"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Run Yarn
+      run: cd frontend && yarn && yarn build
   deploy:
+    needs: build_frontend
     name: "Deploy"
     runs-on: ubuntu-latest
     steps:      
@@ -29,6 +43,17 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
+
+      - name: Push frontend Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: codestar-interchange-frontend
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd frontend
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
       - name: Build backend
         uses: eskatos/gradle-command-action@v1
         with:
@@ -44,7 +69,7 @@ jobs:
         run: |
           cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
 
       - name: Build data
         uses: eskatos/gradle-command-action@v1
@@ -61,4 +86,25 @@ jobs:
         run: |
           cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+
+      # K8S_SECRET is the YAML of the secret for a K8s service account
+      # See https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+      # See https://github.com/Azure/k8s-set-context#service-account-approach
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: service-account
+          k8s-url: ${{ secrets.K8S_URL }}
+          k8s-secret: ${{ secrets.K8S_SECRET }}
+        id: setcontext
+
+      - uses: Azure/k8s-deploy@v1
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        with:
+          namespace: 'default'
+          manifests: |
+              aws/kubernetes/backend-deployment.yaml
+              aws/kubernetes/backend-service.yaml
+          images: '$ECR_REGISTRY/$ECR_REPOSITORY:latest'          
+          kubectl-version: 'latest'

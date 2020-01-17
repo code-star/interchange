@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run Gradle
-      run: cd backend && ./gradlew clean test
+      run: ./gradlew :backend:clean backend:test
 
   frontend:
     name: "frontend / Build and test"
@@ -29,5 +29,5 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Run Gradle
-      run: cd data && ./gradlew clean test
+      run: cd data && ./gradlew data:clean test
 

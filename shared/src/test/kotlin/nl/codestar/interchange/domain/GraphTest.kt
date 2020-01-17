@@ -3,7 +3,7 @@ package nl.codestar.interchange.domain
 import io.kotlintest.specs.StringSpec
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kotlin.test.*
+import org.junit.jupiter.api.Assertions.assertEquals
 
 class GraphTest : StringSpec({
     val nodes = listOf(

@@ -27,13 +27,6 @@ application {
     mainClassName = "io.ktor.server.netty.EngineMain"
 }
 
-repositories {
-    mavenLocal()
-    jcenter()
-    maven { url = uri("https://kotlin.bintray.com/ktor") }
-    maven { url = uri("https://plugins.gradle.org/m2/") }
-}
-
 tasks {
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"

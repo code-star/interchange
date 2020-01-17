@@ -31,7 +31,7 @@ jobs:
         with:
           java-version: 11
 
-      # - name: Push backend Docker image
+      - name: Push backend Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: codestar-interchange-frontend

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "kotlinx-coroutines-core": "^1.3.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-map-gl": "^5.1.2"

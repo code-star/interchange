@@ -21,3 +21,11 @@ external interface ReactMapGLProps : RProps {
     var zoom: Number
     var onViewportChange: (ReactMapGLViewport) -> Unit
 }
+
+@JsName("Marker")
+external val Marker : RClass<MarkerProps>
+
+external interface MarkerProps : RProps {
+    var longitude: Number
+    var latitude: Number
+}

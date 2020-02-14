@@ -20,3 +20,4 @@
     * load balancer(s)/ingress/routes/whatever
     * Exposing AWS attributes to the K8S pods for usage (like the Kinesis stream)
     
+* Terraform destroy still fails, and VPCs need to be deleted through the AWS console

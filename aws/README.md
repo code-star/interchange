@@ -102,10 +102,10 @@ Note that you first have to make sure the EKS setup is done (terraform)
 The `terraform output ...` command can extract values from the Terraform state. These values can then be referenced
 in the yaml if you pass them in as environment variables.
 
-Since R&D Day 5 we use Kustomize to propagate the Terraform state into the kubectl yamls.
+Since R&D Day 5 we use Kustomize to propagate the Terraform state into the kubectl yamls (although we no longer need it).
 
 ### Create services and ingress (using Kustomize)
-To be described.
+* see README.md in ./kubernetes folder
 
 ### Create backend services and ingress (pre-Kustomize)
 * `kubectl apply -f kubernetes/backend.yaml`

@@ -63,7 +63,7 @@
         * `aws eks --profile codestar --region eu-central-1 update-kubeconfig --name interchange-cluster`
         * replace the profile with an appropriate profile if you don't want to use the `codestar` name
     * Create the deployment/service/ingress
-        * See `./aws/tryout` for examples, use `kubectl apply -f <filename>`
+        * See `./kubernetes/README.md` for details 
         
 ### Accessing the kubernetes dashboard
 Based on https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html

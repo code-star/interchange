@@ -3,11 +3,3 @@ kind: Kustomization
 
 bases:
   - ../base
-
-patchesJson6902:
-  - target:
-      group: networking.k8s.io
-      version: v1beta1
-      name: backend
-      kind: Ingress
-    path: customTarget.json

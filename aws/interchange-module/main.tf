@@ -90,16 +90,23 @@ resource "kubernetes_ingress" "interchange_ingress" {
   spec {
     backend {
       service_name = "codestar-interchange-frontend-service"
-      service_port = 8080
+      service_port = 80
     }
     rule {
       http {
         path {
           backend {
             service_name = "codestar-interchange-backend-service"
-            service_port = 8080
+            service_port = 8081
           }
           path = "/api/*"
+        }
+        path {
+          backend {
+            service_name = "codestar-interchange-frontend-service"
+            service_port = 80
+          }
+          path = "/ui/*"
         }
       }
     }

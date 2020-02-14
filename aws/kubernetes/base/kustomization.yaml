@@ -3,7 +3,9 @@ kind: Kustomization
 
 resources:
   - backend-deployment.yaml
-  - backend-ingress.yml
   - backend-service.yaml
+  - frontend-deployment.yaml
+  - frontend-service.yaml
   - data-deployment.yaml
   - data-service.yaml
+  - interchange-ingress.yml

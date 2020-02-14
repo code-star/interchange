@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codestar-interchange-frontend
+  labels:
+    app: codestar-interchange-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codestar-interchange-frontend
+  template:
+    metadata:
+      labels:
+        app: codestar-interchange-frontend
+    spec:
+      containers:
+        - name: codestar-interchange-frontend
+          image: "182176061631.dkr.ecr.eu-central-1.amazonaws.com/codestar-interchange-frontend:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: http

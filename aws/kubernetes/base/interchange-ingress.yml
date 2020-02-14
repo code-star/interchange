@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: interchange
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: codestar-interchange-frontend-service
+    servicePort: 80
+  rules:
+    - http:
+        paths:
+          - path: /api
+            backend:
+              serviceName: codestar-interchange-backend-service
+              servicePort: 8081
+          - path: /ui
+            backend:
+              serviceName: codestar-interchange-frontend-service
+              servicePort: 80

@@ -16,7 +16,7 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
   load_config_file       = false
-  version                = "~> 1.10"
+  version                = "1.10.0"
 }
 
 module "eks" {
@@ -29,9 +29,9 @@ module "eks" {
   worker_groups = [
     {
       instance_type = "t2.micro"
-      asg_min_size = 3
-      asg_max_size  = 3
-      asg_desired_capacity = 3
+      asg_min_size = 4
+      asg_max_size  = 4
+      asg_desired_capacity = 4
     }
   ]
 
@@ -120,6 +120,7 @@ resource "kubernetes_service" "interchange_backend_service" {
       target_port = 8081
       protocol = "TCP"
     }
+    type = "LoadBalancer"
   }
 }
 
@@ -131,6 +132,24 @@ resource "kubernetes_service" "interchange_frontend_service" {
   spec {
     selector = {
       app = "codestar-interchange-frontend"
+    }
+    port {
+      port = 8080
+      target_port = 80
+      protocol = "TCP"
+    }
+    type = "LoadBalancer"
+  }
+}
+
+resource "kubernetes_service" "interchange_router_service" {
+  metadata {
+    name = "codestar-interchange-router-service"
+  }
+
+  spec {
+    selector = {
+      app = "codestar-interchange-router"
     }
     port {
       port = 8080
@@ -231,40 +250,48 @@ resource "kubernetes_deployment" "interchange_backend_deployment" {
 
 }
 
+resource "kubernetes_deployment" "interchange_router_deployment" {
+  metadata {
+    name = "codestar-interchange-router-deployment"
+    labels = {
+      app = "codestar-interchange-router"
+    }
+  }
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "codestar-interchange-router"
+      }
+    }
+    template{
+      metadata {
+        labels = {
+          app = "codestar-interchange-router"
+        }
+      }
+      spec{
+        container {
+          name = "codestar-interchange-router"
+          image = "hub.docker.com/nginx:latest"
+          image_pull_policy = "IfNotPresent"
+          resources {
+            limits {
+              cpu = "0.5"
+              memory = "512Mi"
+            }
+            requests {
+              cpu = "250m"
+              memory = "50Mi"
+            }
+          }
+          port {
+            container_port = 80
+          }
+        }
+      }
+    }
+  }
 
-//apiVersion: v1
-//kind: Service
-//metadata:
-//name: my-service
-//spec:
-//selector:
-//app: MyApp
-//ports:
-//- protocol: TCP
-//port: 80
-//targetPort: 9376
-//clusterIP: 10.0.171.239
-//type: LoadBalancer
-//status:
-//loadBalancer:
-//ingress:
-//- ip: 192.0.2.127
+}
 
-//
-//resource "kubernetes_service" "interchange_loadbalancer" {
-//  metadata {
-//    name = "codestar-interchange-loadbalancer"
-//  }
-//
-//  spec {
-//    selector = {
-//      app = "codestar-interchange-loadbalancer"
-//    }
-//    port {
-//      port = 80
-//      target_port = 8080
-//      protocol = "TCP"
-//    }
-//    cluster_ip = ""
-//  }
-//}
